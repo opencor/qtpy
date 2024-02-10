@@ -36,6 +36,17 @@ packages::
     >>> from qtpy import QtGui, QtWidgets, QtCore
     >>> print(QtWidgets.QWidget)
 
+PythonQt
+========
+
+Set the QT_API environment variable to 'pythonqt' before importing other
+packages::
+
+    >>> import os
+    >>> os.environ['QT_API'] = 'pythonqt'
+    >>> from qtpy import QtGui, QtWidgets, QtCore
+    >>> print(QtWidgets.QWidget)
+
 PyQt6
 =====
 
@@ -148,6 +159,9 @@ PYQT6_API = ["pyqt6"]
 # Names of the expected PySide2 api
 PYSIDE2_API = ["pyside2"]
 
+# Names of the expected PythonQt api
+PYTHONQT_API = ["pythonqt"]
+
 # Names of the expected PySide6 api
 PYSIDE6_API = ["pyside6"]
 
@@ -166,6 +180,7 @@ binding_specified = QT_API in os.environ
 API_NAMES = {
     "pyqt5": "PyQt5",
     "pyside2": "PySide2",
+    "pythonqt": "PythonQt",
     "pyqt6": "PyQt6",
     "pyside6": "PySide6",
 }
@@ -179,7 +194,7 @@ if API not in API_NAMES:
 
 is_old_pyqt = is_pyqt46 = False
 QT5 = PYQT5 = True
-QT4 = QT6 = PYQT4 = PYQT6 = PYSIDE = PYSIDE2 = PYSIDE6 = False
+QT4 = QT6 = PYQT4 = PYQT6 = PYSIDE = PYSIDE2 = PYTHONQT = PYSIDE6 = False
 
 PYQT_VERSION = None
 PYSIDE_VERSION = None
@@ -191,6 +206,8 @@ if not os.environ.get("FORCE_QT_API"):
         API = initial_api if initial_api in PYQT5_API else "pyqt5"
     elif "PySide2" in sys.modules:
         API = initial_api if initial_api in PYSIDE2_API else "pyside2"
+    elif "PythonQt" in sys.modules:
+        API = initial_api if initial_api in PYTHONQT_API else "pythonqt"
     elif "PyQt6" in sys.modules:
         API = initial_api if initial_api in PYQT6_API else "pyqt6"
     elif "PySide6" in sys.modules:
@@ -254,9 +271,27 @@ if API in PYSIDE2_API:
             del macos_version
             del qt_ver
     except ImportError:
+        API = "pythonqt"
+    else:
+        os.environ[QT_API] = API
+
+if API in PYTHONQT_API:
+    try:
+        from PythonQt import QtCore, QtGui
+
+        QT_VERSION = QtCore.qVersion()
+
+        PYQT5 = False
+        QT5 = PYTHONQT = True
+
+
+##        return QtCore, QtGui, QtSvg, QT_API_PYTHONQT
+
+    except ImportError:
         API = "pyqt6"
     else:
         os.environ[QT_API] = API
+
 
 if API in PYQT6_API:
     try:

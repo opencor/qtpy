@@ -11,7 +11,7 @@ from functools import partialmethod
 
 from packaging.version import parse
 
-from . import PYQT5, PYQT6, PYSIDE2, PYSIDE6
+from . import PYQT5, PYQT6, PYSIDE2, PYSIDE6, PYTHONQT
 from . import QT_VERSION as _qt_version
 from ._utils import (
     add_action,
@@ -161,7 +161,8 @@ elif PYSIDE6:
     # Passing as default value 0 in the same way PySide6 < 6.3.2 does for the `QFileDialog.Options` definition.
     if parse(_qt_version) > parse("6.3"):
         QFileDialog.Options = lambda value=0: QFileDialog.Option(value)
-
+elif PYTHONQT:
+    from PythonQt.QtGui import *
 
 if PYSIDE2 or PYSIDE6:
     # Make PySide2/6 `QFileDialog` static methods accept the `directory` kwarg as `dir`

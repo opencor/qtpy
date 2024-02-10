@@ -8,7 +8,7 @@
 
 """Provides QtGui classes and functions."""
 
-from . import PYQT5, PYQT6, PYSIDE2, PYSIDE6, QtModuleNotInstalledError
+from . import PYQT5, PYQT6, PYSIDE2, PYTHONQT, PYSIDE6, QtModuleNotInstalledError
 from ._utils import getattr_missing_optional_dep, possibly_static_exec
 
 _missing_optional_names = {}
@@ -151,6 +151,12 @@ elif PYSIDE6:
         *args,
         **kwargs,
     )
+elif PYTHONQT:
+    import PythonQt.QtGui
+    from PythonQt.QtGui import *
+
+    # Set application instance variable
+    QtGui.qApp = QtGui.QApplication.instance()
 
 if PYSIDE2 or PYSIDE6:
     # PySide{2,6} do not accept the `mode` keyword argument in

@@ -7,7 +7,7 @@
 
 """Provides QtSvg classes and functions."""
 
-from . import PYQT5, PYQT6, PYSIDE2, PYSIDE6
+from . import PYQT5, PYQT6, PYSIDE2, PYTHONQT, PYSIDE6
 
 if PYQT5:
     from PyQt5.QtSvg import *
@@ -15,5 +15,7 @@ elif PYQT6:
     from PyQt6.QtSvg import *
 elif PYSIDE2:
     from PySide2.QtSvg import *
+elif PYTHONQT:
+    from PythonQt.QtSvg import *
 elif PYSIDE6:
     from PySide6.QtSvg import *

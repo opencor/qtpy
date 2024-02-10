@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING
 
 from packaging.version import parse
 
-from . import PYQT5, PYQT6, PYSIDE2, PYSIDE6
+from . import PYQT5, PYQT6, PYSIDE2, PYTHONQT, PYSIDE6
 from . import QT_VERSION as _qt_version
 from ._utils import possibly_static_exec, possibly_static_exec_
 
@@ -159,6 +159,14 @@ elif PYSIDE6:
     # Passing as default value 0 in the same way PySide6 6.3.2 does for the `Qt.ItemFlags` definition.
     if parse(_qt_version) > parse("6.3"):
         Qt.ItemFlags = lambda value=0: Qt.ItemFlag(value)
+
+elif PYTHONQT:
+    import PythonQt.QtCore
+    from PythonQt.QtCore import *
+
+    # Map key codes
+    QtCore.Qt.CTRL = QtCore.Qt.Key_Control
+    QtCore.Qt.SHIFT = QtCore.Qt.Key_Shift
 
 # For issue #153 and updated for issue #305
 if PYQT5 or PYQT6:
