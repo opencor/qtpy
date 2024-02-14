@@ -152,7 +152,7 @@ elif PYSIDE6:
         **kwargs,
     )
 elif PYTHONQT:
-    import PythonQt.QtGui
+    import PythonQt.QtGui as QtGui
     from PythonQt.QtGui import *
 
     # Set application instance variable

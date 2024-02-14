@@ -161,12 +161,11 @@ elif PYSIDE6:
         Qt.ItemFlags = lambda value=0: Qt.ItemFlag(value)
 
 elif PYTHONQT:
-    import PythonQt.QtCore
     from PythonQt.QtCore import *
 
     # Map key codes
-    QtCore.Qt.CTRL = QtCore.Qt.Key_Control
-    QtCore.Qt.SHIFT = QtCore.Qt.Key_Shift
+    Qt.CTRL = Qt.Key_Control
+    Qt.SHIFT = Qt.Key_Shift
 
 # For issue #153 and updated for issue #305
 if PYQT5 or PYQT6:
