@@ -284,14 +284,10 @@ if API in PYTHONQT_API:
         PYQT5 = False
         QT5 = PYTHONQT = True
 
-
-##        return QtCore, QtGui, QtSvg, QT_API_PYTHONQT
-
     except ImportError:
         API = "pyqt6"
     else:
         os.environ[QT_API] = API
-
 
 if API in PYQT6_API:
     try:
